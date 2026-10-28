@@ -3,45 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de la Pràctica</title>
+    <title>Organitzador de tasques</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="container">
-    <h1>Gestor d'Elements</h1>
+<h1>Organitzador de tasques</h1>
+<h2>Afegir Nova Tasca</h2>
+
+<div class="panell card">
+
 
     <!-- Formulari d'entrada de dades -->
-    <div class="card">
-        <h2>Afegir Nou Element</h2>
 
-        <div class="field">
-            <label for="iNom">Nom / Títol:</label>
-            <input type="text" id="iNom" placeholder="Escriu un nom...">
-        </div>
-
-        <div class="field">
-            <label for="sCategoria">Categoria:</label>
-            <select id="sCategoria">
-                <option value="Opció A">Opció A</option>
-                <option value="Opció B">Opció B</option>
-                <option value="Opció C">Opció C</option>
-            </select>
-        </div>
-
-        <div class="field">
-            <label for="iValor">Valor / Preu / Punts:</label>
-            <input type="number" id="iValor" value="0">
-        </div>
-
-        <div class="field-checkbox">
-            <label>
-                <input type="checkbox" id="cEstat"> Actiu / Completat
-            </label>
-        </div>
-
-        <button id="btnAfegir">Afegir a la Llista</button>
+    <div class="field">
+        <label for="iNom">Nom:</label>
+        <input type="text" id="iNom" placeholder="Escriu un nom...">
     </div>
 
+    <div class="field">
+        <label for="sTipus">Tipus:</label>
+        <select id="sTipus">
+            <option value="Deures">Deures</option>
+            <option value="Estudiar">Estudiar</option>
+            <option value="Projecte">Projecte</option>
+        </select>
+    </div>
+    <div class="field">
+        <label for="iData">Data:</label>
+        <input type="date" id="iData">
+
+        <button id="btnAfegir">Afegir tasca</button>
+    </div>
+</div>
+
+<div class="panell">
+    <div id="contenidorTasquesNoCompletades">
+        <h1>No completades</h1>
+    </div>
+
+<div id="contenidorTasquesEnProces">
+    <h1>En procés</h1>
+</div>
+
+    <div id="contenidorTasquesCompletades">
+        <h1>Completades</h1>
+    </div>
 </div>
 
 <script src="app.js"></script>

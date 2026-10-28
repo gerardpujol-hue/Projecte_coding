@@ -10,6 +10,12 @@ body {
     color: #334155;
     padding: 20px;
 }
+.panell{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 100px;
+    margin: 10px;
+}
 
 .container {
     max-width: 500px;
@@ -21,23 +27,35 @@ body {
 
 h1 {
     text-align: center;
-    color: #0f172a;
+    color: #0d1b2a;
+}
+h2{
+    text-align: left;
+    color: #1b263b;
 }
 
+h3{
+    text-align: left;
+    color: #1b263b;
+}
+label{
+    color: #0d1b2a;
+}
 .card {
-    background: white;
+    background: rgb(119 141 169 / 0.75);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .card h2 {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 8px;
+    font-size: 24px;
 }
 
+.abaix {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 .field {
     display: flex;
     flex-direction: column;
@@ -66,7 +84,7 @@ select {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #2563eb;
+    background-color: #1b263b;
     color: white;
     border: none;
     border-radius: 6px;
@@ -75,7 +93,7 @@ button {
 }
 
 button:hover {
-    background-color: #1d4ed8;
+    background-color: #1b263b;
 }
 
 .llista-grid {
@@ -98,15 +116,4 @@ button:hover {
     font-size: 0.85rem;
     color: #64748b;
     margin-top: 2px;
-}
-
-.btn-esborrar {
-    background-color: #ef4444;
-    width: auto;
-    padding: 6px 10px;
-    font-size: 0.8rem;
-}
-
-.btn-esborrar:hover {
-    background-color: #dc2626;
 }

@@ -1,69 +1,85 @@
 "use strict";
-// 2. Estat de l'aplicació (Array global)
-let llistaElements = [];
-// 3. Funció per llegir el formulari i afegir un nou element a l'array
+let tasca1;
+let llistaTasques = [];
+// 2. Funció per llegir el formulari i afegir un nou element a l'array
 function afegirElement() {
     const inputNom = document.getElementById('iNom');
-    const selectCategoria = document.getElementById('sCategoria');
-    const inputValor = document.getElementById('iValor');
-    const checkEstat = document.getElementById('cEstat');
-    // Validació bàsica
-    if (inputNom.value.trim() === '') {
-        alert('Escriu un nom abans d\'afegir!');
-        return;
-    }
-    // Crear l'objecte
-    const nouElement = {
+    const selectTipus = document.getElementById('sTipus');
+    const inputData = document.getElementById('iData');
+    tasca1 = {
         nom: inputNom.value,
-        categoria: selectCategoria.value,
-        valor: Number(inputValor.value),
-        estat: checkEstat.checked
+        tipus: selectTipus.value,
+        data: new Date(inputData.value) || 0,
+        estat: 'No completat'
     };
-    // Afegir-lo a l'array
-    llistaElements.push(nouElement);
-    // Netejar el formulari
-    inputNom.value = '';
-    inputValor.value = '0';
-    checkEstat.checked = false;
+    console.log(tasca1.data.getDate().toString() + '-' + (tasca1.data.getMonth().toString()));
+    llistaTasques.push(tasca1);
+    console.table(llistaTasques);
     // Actualitzar la pantalla
     actualitzarUI();
 }
-// 4. Funció per esborrar un element per la seva posició de l'array
-function esborrarElement(index) {
-    llistaElements.splice(index, 1);
+function canviarEnProces(i) {
+    if (llistaTasques[i].estat === 'No completat') {
+        llistaTasques[i].estat = 'En procés';
+    }
+    actualitzarUI();
+}
+function canviarCompletat(i) {
+    if (llistaTasques[i].estat === 'En procés') {
+        llistaTasques[i].estat = 'Completat';
+    }
     actualitzarUI();
 }
 // 5. Funció per dibuixar l'array al DOM
 function actualitzarUI() {
-    const contenidor = document.getElementById('llistaContenidor');
-    const totalSpan = document.getElementById('totalElements');
-    // Netejem el contingut anterior
-    contenidor.innerHTML = '';
-    // Actualitzem el comptador total
-    totalSpan.innerText = llistaElements.length.toString();
-    // Recorrem l'array i creem els elements HTML
-    llistaElements.forEach((element, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'item-card';
-        itemDiv.innerHTML = `
-      <div class="item-info">
-        <strong>${element.nom}</strong> [${element.categoria}]
-        <p>Valor: ${element.valor} | ${element.estat ? '✅ Actiu' : '❌ Inactiu'}</p>
-      </div>
-    `;
-        // Botó per eliminar l'element
-        const btnEliminar = document.createElement('button');
-        btnEliminar.className = 'btn-esborrar';
-        btnEliminar.innerText = 'Eliminar';
-        btnEliminar.onclick = () => esborrarElement(index);
-        itemDiv.appendChild(btnEliminar);
-        contenidor.appendChild(itemDiv);
-    });
+    // const nom = document.getElementById('nom') as HTMLElement;
+    // const tipus = document.getElementById('tipus') as HTMLElement;
+    // const importancia = document.getElementById('importancia') as HTMLElement;
+    // nom.innerText= tasca1.nom;
+    // tipus.innerText='Tipus: ' + tasca1.tipus;
+    // importancia.innerText='Importància: ' + tasca1.importancia;
+    const contenidorNoCompletades = document.getElementById('contenidorTasquesNoCompletades');
+    const contenidorEnProces = document.getElementById('contenidorTasquesEnProces');
+    const contenidorCompletades = document.getElementById('contenidorTasquesCompletades');
+    let htmlNoCompletades = '<h1>No completades</h1>';
+    let htmlEnProces = '<h1>En procés</h1>';
+    let htmlCompletades = '<h1>Completades</h1>';
+    for (let i = 0; i < llistaTasques.length; i++) {
+        if (llistaTasques[i].estat === 'No completat') {
+            htmlNoCompletades += '<div class=\"card abaix\">';
+            htmlNoCompletades += '<h2>' + llistaTasques[i].nom + '</h2>';
+            htmlNoCompletades += '<h3>' + 'Tipus: ' + llistaTasques[i].tipus + '</h3>';
+            htmlNoCompletades += '<h3>' + 'Data: ' + llistaTasques[i].data + '</h3>';
+            htmlNoCompletades += `<button onclick="canviarEnProces(${i})">Canvi</button>`;
+            htmlNoCompletades += '</div>';
+        }
+        if (llistaTasques[i].estat === 'En procés') {
+            htmlEnProces += '<div class=\"card abaix\">';
+            htmlEnProces += '<h2>' + llistaTasques[i].nom + '</h2>';
+            htmlEnProces += '<h3>' + 'Tipus: ' + llistaTasques[i].tipus + '</h3>';
+            htmlEnProces += '<h3>' + 'Data: ' + llistaTasques[i].data + '</h3>';
+            htmlEnProces += `<button onclick="canviarCompletat(${i})">Canvi</button>`;
+            htmlEnProces += '</div>';
+        }
+        if (llistaTasques[i].estat === 'Completat') {
+            htmlCompletades += '<div class=\"card abaix\">';
+            htmlCompletades += '<h2>' + llistaTasques[i].nom + '</h2>';
+            htmlCompletades += '<h3>' + 'Tipus: ' + llistaTasques[i].tipus + '</h3>';
+            htmlCompletades += '<h3>' + 'Data: ' + llistaTasques[i].data + '</h3>';
+            htmlCompletades += `<button>Esborrar</button>`;
+            htmlCompletades += '</div>';
+        }
+    }
+    contenidorNoCompletades.innerHTML = htmlNoCompletades;
+    contenidorEnProces.innerHTML = htmlEnProces;
+    contenidorCompletades.innerHTML = htmlCompletades;
 }
 // 6. Assegurar que el DOM està carregat abans d'assignar esdeveniments
 document.addEventListener('DOMContentLoaded', () => {
     const btnAfegir = document.getElementById('btnAfegir');
     btnAfegir === null || btnAfegir === void 0 ? void 0 : btnAfegir.addEventListener('click', afegirElement);
-    // Renderitzat inicial
     actualitzarUI();
 });
+actualitzarUI();
+//ctrl+z=undo ctrl+shift+z=redo
+//pitjar per amunt a sa terminal
