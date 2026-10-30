@@ -9,12 +9,12 @@ function afegirElement() {
     tasca1 = {
         nom: inputNom.value,
         tipus: selectTipus.value,
-        data: new Date(inputData.value) || 0,
+        data: new Date(inputData.value),
         estat: 'No completat'
     };
-    console.log(tasca1.data.getDate().toString() + '-' + (tasca1.data.getMonth().toString()));
     llistaTasques.push(tasca1);
-    console.table(llistaTasques);
+    console.log(tasca1.data.getDate().toString() + '-' + (tasca1.data.getMonth().toString()));
+    console.log(llistaTasques);
     // Actualitzar la pantalla
     actualitzarUI();
 }
@@ -29,6 +29,18 @@ function canviarCompletat(i) {
         llistaTasques[i].estat = 'Completat';
     }
     actualitzarUI();
+}
+function esborrar(i) {
+    if (llistaTasques[i].estat === 'Completat') {
+        llistaTasques.splice(i, 1);
+    }
+    actualitzarUI();
+}
+function escriureData(data) {
+    let dia = data.getDate();
+    let mes = data.getMonth() + 1;
+    let any = data.getFullYear();
+    return dia + "-" + mes + "-" + any;
 }
 // 5. Funció per dibuixar l'array al DOM
 function actualitzarUI() {
@@ -49,7 +61,7 @@ function actualitzarUI() {
             htmlNoCompletades += '<div class=\"card abaix\">';
             htmlNoCompletades += '<h2>' + llistaTasques[i].nom + '</h2>';
             htmlNoCompletades += '<h3>' + 'Tipus: ' + llistaTasques[i].tipus + '</h3>';
-            htmlNoCompletades += '<h3>' + 'Data: ' + llistaTasques[i].data + '</h3>';
+            htmlNoCompletades += '<h3>' + 'Data: ' + escriureData(llistaTasques[i].data) + '</h3>';
             htmlNoCompletades += `<button onclick="canviarEnProces(${i})">Canvi</button>`;
             htmlNoCompletades += '</div>';
         }
@@ -57,7 +69,7 @@ function actualitzarUI() {
             htmlEnProces += '<div class=\"card abaix\">';
             htmlEnProces += '<h2>' + llistaTasques[i].nom + '</h2>';
             htmlEnProces += '<h3>' + 'Tipus: ' + llistaTasques[i].tipus + '</h3>';
-            htmlEnProces += '<h3>' + 'Data: ' + llistaTasques[i].data + '</h3>';
+            htmlEnProces += '<h3>' + 'Data: ' + escriureData(llistaTasques[i].data) + '</h3>';
             htmlEnProces += `<button onclick="canviarCompletat(${i})">Canvi</button>`;
             htmlEnProces += '</div>';
         }
@@ -65,8 +77,8 @@ function actualitzarUI() {
             htmlCompletades += '<div class=\"card abaix\">';
             htmlCompletades += '<h2>' + llistaTasques[i].nom + '</h2>';
             htmlCompletades += '<h3>' + 'Tipus: ' + llistaTasques[i].tipus + '</h3>';
-            htmlCompletades += '<h3>' + 'Data: ' + llistaTasques[i].data + '</h3>';
-            htmlCompletades += `<button>Esborrar</button>`;
+            htmlCompletades += '<h3>' + 'Data: ' + escriureData(llistaTasques[i].data) + '</h3>';
+            htmlCompletades += `<button onclick="esborrar(${i})">Esborrar</button>`;
             htmlCompletades += '</div>';
         }
     }
@@ -83,3 +95,4 @@ document.addEventListener('DOMContentLoaded', () => {
 actualitzarUI();
 //ctrl+z=undo ctrl+shift+z=redo
 //pitjar per amunt a sa terminal
+//commit
